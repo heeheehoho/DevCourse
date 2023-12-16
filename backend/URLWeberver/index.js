@@ -1,4 +1,6 @@
-const startServer = require('./server');
+let server = require('./server');
+let router = require('./router');
+let requestHandler = require('./requestHandler');
 
-startServer();
+server.start(router.route, requestHandler.handle);
  
