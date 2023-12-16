@@ -1,15 +1,15 @@
-const http = require('http');
+const http = require('http');   //node.js의 http 모듈을 불러온다 -> server-client 기능 제공
+const url = require('url');
 
-const onRequest = (request, response) => {
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end('Hello Node.js');
-};
+function start(route) {
+    const onRequest = (request, response) => {
+        let pathname = url.parse(request.url).pathname;
+        route(pathname);
 
-const startServer = () => {
-    const server = http.createServer(onRequest);
-    server.listen(8888, () => {
-        console.log('Server is running on http://localhost:8888');
-    });
-};
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end('Hello Node.js');
+    }
+    http.createServer(onRequest).listen(8888);
+}
 
-module.exports = startServer;
+exports.start = start;
